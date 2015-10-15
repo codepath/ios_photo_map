@@ -33,34 +33,53 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("LocationCell") as LocationCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell") as! LocationCell
         
-        cell.location = results[indexPath.row] as NSDictionary
+        cell.location = results[indexPath.row] as! NSDictionary
         
         return cell
     }
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        var newText = NSString(string: searchBar.text).stringByReplacingCharactersInRange(range, withString: text)
+        let newText = NSString(string: searchBar.text!).stringByReplacingCharactersInRange(range, withString: text)
         fetchLocations(newText)
         
         return true
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        fetchLocations(searchBar.text)
+        fetchLocations(searchBar.text!)
     }
     
     func fetchLocations(query: String, near: String = "Sunnyvale") {
-        var url = "https://api.foursquare.com/v2/venues/search?client_id=QA1L0Z0ZNA2QVEEDHFPQWK0I5F1DE3GPLSNW4BZEBGJXUCFL&client_secret=W2AOE1TYC4MHK5SZYOUGX0J3LVRALMPB4CXT3ZH21ZCPUMCU&v=20141020&near=\(near),CA&query=\(query.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)"
-        var request = NSURLRequest(URL: NSURL(string: url)!)
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            if (data != nil) {
-                var responseDictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as NSDictionary
-                self.results = responseDictionary.valueForKeyPath("response.venues") as NSArray
-                self.tableView.reloadData()
-            }
-        }
+        // TODO: Fill in actual CLIENT_ID and CLIENT_SECRET
+        let CLIENT_ID = "CLIENT_ID GOES HERE"
+        let CLIENT_SECRET = "CLIENT_SECRET GOES HERE"
+        
+        let query = query.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+        let urlString = "https://api.foursquare.com/v2/venues/search?client_id=\(CLIENT_ID)&client_secret=\(CLIENT_SECRET)&v=20141020&near=\(near),CA&query=\(query!)"
+        let url = NSURL(string: urlString)!
+        let request = NSURLRequest(URL: url)
+
+        let session = NSURLSession(
+            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+            delegate:nil,
+            delegateQueue:NSOperationQueue.mainQueue()
+        )
+        
+        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
+            completionHandler: { (dataOrNil, response, error) in
+                if let data = dataOrNil {
+                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
+                        data, options:[]) as? NSDictionary {
+                            NSLog("response: \(responseDictionary)")
+                            self.results = responseDictionary.valueForKeyPath("response.venues") as! NSArray
+                            self.tableView.reloadData()
+
+                    }
+                }
+        });
+        task.resume()
     }
 
     // MARK: - Navigation
@@ -69,19 +88,19 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        var cell = sender as UITableViewCell
-        var indexPath = tableView.indexPathForCell(cell)!
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPathForCell(cell)!
         
         // This is the selected venue
-        var venue = results[indexPath.row] as NSDictionary
+        let venue = results[indexPath.row] as! NSDictionary
         
-        var lat = venue.valueForKeyPath("location.lat") as NSNumber
-        var lng = venue.valueForKeyPath("location.lng") as NSNumber
+        let lat = venue.valueForKeyPath("location.lat") as! NSNumber
+        let lng = venue.valueForKeyPath("location.lng") as! NSNumber
         
-        var latString = "\(lat)"
-        var lngString = "\(lng)"
+        let latString = "\(lat)"
+        let lngString = "\(lng)"
         
-        println(latString + " " + lngString)
+        print(latString + " " + lngString)
     }
 
 }
