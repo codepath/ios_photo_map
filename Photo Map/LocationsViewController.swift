@@ -10,9 +10,13 @@ import UIKit
 
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
+    // TODO: Fill in actual CLIENT_ID and CLIENT_SECRET
+    let CLIENT_ID = "CLIENT_ID GOES HERE"
+    let CLIENT_SECRET = "CLIENT_SECRET GOES HERE"
+
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+
     var results: NSArray = []
     
     override func viewDidLoad() {
@@ -51,14 +55,11 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         fetchLocations(searchBar.text!)
     }
     
-    func fetchLocations(query: String, near: String = "Sunnyvale") {
-        // TODO: Fill in actual CLIENT_ID and CLIENT_SECRET
-        let CLIENT_ID = "CLIENT_ID GOES HERE"
-        let CLIENT_SECRET = "CLIENT_SECRET GOES HERE"
-        
-        let query = query.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
-        let urlString = "https://api.foursquare.com/v2/venues/search?client_id=\(CLIENT_ID)&client_secret=\(CLIENT_SECRET)&v=20141020&near=\(near),CA&query=\(query!)"
-        let url = NSURL(string: urlString)!
+    func fetchLocations(query: String, near: String = "San Francisco") {
+        let baseUrlString = "https://api.foursquare.com/v2/venues/search?"
+        let queryString = "client_id=\(CLIENT_ID)&client_secret=\(CLIENT_SECRET)&v=20141020&near=\(near),CA&query=\(query)"
+
+        let url = NSURL(string: baseUrlString + queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)!
         let request = NSURLRequest(URL: url)
 
         let session = NSURLSession(
@@ -102,5 +103,4 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         print(latString + " " + lngString)
     }
-
 }
