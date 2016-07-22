@@ -43,6 +43,19 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         
         return cell
     }
+
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // This is the selected venue
+        let venue = results[indexPath.row] as! NSDictionary
+
+        let lat = venue.valueForKeyPath("location.lat") as! NSNumber
+        let lng = venue.valueForKeyPath("location.lng") as! NSNumber
+
+        let latString = "\(lat)"
+        let lngString = "\(lng)"
+
+        print(latString + " " + lngString)
+    }
     
     func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let newText = NSString(string: searchBar.text!).stringByReplacingCharactersInRange(range, withString: text)
@@ -83,24 +96,4 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         task.resume()
     }
 
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        let cell = sender as! UITableViewCell
-        let indexPath = tableView.indexPathForCell(cell)!
-        
-        // This is the selected venue
-        let venue = results[indexPath.row] as! NSDictionary
-        
-        let lat = venue.valueForKeyPath("location.lat") as! NSNumber
-        let lng = venue.valueForKeyPath("location.lng") as! NSNumber
-        
-        let latString = "\(lat)"
-        let lngString = "\(lng)"
-        
-        print(latString + " " + lngString)
-    }
 }
