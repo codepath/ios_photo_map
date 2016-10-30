@@ -32,24 +32,24 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return results.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("LocationCell") as! LocationCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell") as! LocationCell
         
-        cell.location = results[indexPath.row] as! NSDictionary
+        cell.location = results[(indexPath as NSIndexPath).row] as! NSDictionary
         
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // This is the selected venue
-        let venue = results[indexPath.row] as! NSDictionary
+        let venue = results[(indexPath as NSIndexPath).row] as! NSDictionary
 
-        let lat = venue.valueForKeyPath("location.lat") as! NSNumber
-        let lng = venue.valueForKeyPath("location.lng") as! NSNumber
+        let lat = venue.value(forKeyPath: "location.lat") as! NSNumber
+        let lng = venue.value(forKeyPath: "location.lng") as! NSNumber
 
         let latString = "\(lat)"
         let lngString = "\(lng)"
@@ -57,37 +57,37 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         print(latString + " " + lngString)
     }
     
-    func searchBar(searchBar: UISearchBar, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        let newText = NSString(string: searchBar.text!).stringByReplacingCharactersInRange(range, withString: text)
+    func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        let newText = NSString(string: searchBar.text!).replacingCharacters(in: range, with: text)
         fetchLocations(newText)
         
         return true
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         fetchLocations(searchBar.text!)
     }
     
-    func fetchLocations(query: String, near: String = "San Francisco") {
+    func fetchLocations(_ query: String, near: String = "San Francisco") {
         let baseUrlString = "https://api.foursquare.com/v2/venues/search?"
         let queryString = "client_id=\(CLIENT_ID)&client_secret=\(CLIENT_SECRET)&v=20141020&near=\(near),CA&query=\(query)"
 
-        let url = NSURL(string: baseUrlString + queryString.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)!
-        let request = NSURLRequest(URL: url)
+        let url = URL(string: baseUrlString + queryString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)!
+        let request = URLRequest(url: url)
 
-        let session = NSURLSession(
-            configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
             delegate:nil,
-            delegateQueue:NSOperationQueue.mainQueue()
+            delegateQueue:OperationQueue.main
         )
         
-        let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
+        let task : URLSessionDataTask = session.dataTask(with: request,
             completionHandler: { (dataOrNil, response, error) in
                 if let data = dataOrNil {
-                    if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
-                        data, options:[]) as? NSDictionary {
+                    if let responseDictionary = try! JSONSerialization.jsonObject(
+                        with: data, options:[]) as? NSDictionary {
                             NSLog("response: \(responseDictionary)")
-                            self.results = responseDictionary.valueForKeyPath("response.venues") as! NSArray
+                            self.results = responseDictionary.value(forKeyPath: "response.venues") as! NSArray
                             self.tableView.reloadData()
 
                     }
