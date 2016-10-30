@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11D16EF31BD08AAE00B6CBFE /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D16EF21BD08AAE00B6CBFE /* PhotoMapViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		11D16EF51BD08ABE00B6CBFE /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D16EF41BD08ABE00B6CBFE /* FullImageViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		11D16EF31BD08AAE00B6CBFE /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D16EF21BD08AAE00B6CBFE /* PhotoMapViewController.swift */; };
+		11D16EF51BD08ABE00B6CBFE /* FullImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D16EF41BD08ABE00B6CBFE /* FullImageViewController.swift */; };
 		228D474F19F5DA9F00DE9903 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228D474E19F5DA9F00DE9903 /* AppDelegate.swift */; };
 		228D475419F5DA9F00DE9903 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 228D475219F5DA9F00DE9903 /* Main.storyboard */; };
 		228D475619F5DA9F00DE9903 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 228D475519F5DA9F00DE9903 /* Images.xcassets */; };
@@ -217,9 +217,11 @@
 				TargetAttributes = {
 					228D474819F5DA9F00DE9903 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0800;
 					};
 					228D475D19F5DAA000DE9903 = {
 						CreatedOnToolsVersion = 6.0;
+						LastSwiftMigration = 0800;
 						TestTargetID = 228D474819F5DA9F00DE9903;
 					};
 				};
@@ -452,6 +454,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Photo Map/Photo Map-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -466,6 +469,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codepath.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Photo Map/Photo Map-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -485,6 +489,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codepath.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Photo Map.app/Photo Map";
 			};
 			name = Debug;
@@ -501,6 +506,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.codepath.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Photo Map.app/Photo Map";
 			};
 			name = Release;
