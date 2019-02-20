@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PhotoMapViewController: UIViewController {
+class PhotoMapViewController: UIViewController, LocationsViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,9 @@ class PhotoMapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
+        print("location picked")
+    }
     
     // MARK: - Navigation
 
@@ -29,6 +31,9 @@ class PhotoMapViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        let locationsViewController = segue.destination as! LocationsViewController
+        locationsViewController.delegate = self
     }
     
 
