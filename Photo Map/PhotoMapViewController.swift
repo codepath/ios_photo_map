@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class PhotoMapViewController: UIViewController, LocationsViewControllerDelegate {
 
