@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import MapKit
 
 protocol LocationsViewControllerDelegate : class {
-    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber)
+    func locationsPickedLocation(controller: LocationsViewController, latitude: CLLocationDegrees, longitude: CLLocationDegrees)
 }
 
 class LocationsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
@@ -60,7 +61,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
         let lngString = "\(lng)"
 
         print(latString + " " + lngString)
-        delegate.locationsPickedLocation(controller: self, latitude: lat, longitude: lng)
+        delegate.locationsPickedLocation(controller: self, latitude: CLLocationDegrees(lat), longitude: CLLocationDegrees(lng))
         
         // Return to the PhotoMapViewController
         navigationController?.popViewController(animated: true)

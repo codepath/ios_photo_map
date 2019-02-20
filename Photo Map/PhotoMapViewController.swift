@@ -21,7 +21,7 @@ class PhotoMapViewController: UIViewController, LocationsViewControllerDelegate 
         // Dispose of any resources that can be recreated.
     }
     
-    func locationsPickedLocation(controller: LocationsViewController, latitude: NSNumber, longitude: NSNumber) {
+    func locationsPickedLocation(controller: LocationsViewController, latitude: CLLocationDegrees, longitude: CLLocationDegrees) {
         print("location picked")
     }
     
