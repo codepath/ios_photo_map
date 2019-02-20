@@ -39,7 +39,7 @@ class LocationsViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LocationCell") as! LocationCell
         
-        cell.location = results[(indexPath as NSIndexPath).row] as! NSDictionary
+        cell.location = results[(indexPath as NSIndexPath).row] as? NSDictionary
         
         return cell
     }

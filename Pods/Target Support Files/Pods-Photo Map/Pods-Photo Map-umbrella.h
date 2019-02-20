@@ -10,14 +10,7 @@
 #endif
 #endif
 
-#ifndef TARGET_OS_IOS
-  #define TARGET_OS_IOS TARGET_OS_IPHONE
-#endif
 
-#ifndef TARGET_OS_WATCH
-  #define TARGET_OS_WATCH 0
-#endif
+FOUNDATION_EXPORT double Pods_Photo_MapVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_Photo_MapVersionString[];
 
-#ifndef TARGET_OS_TV
-  #define TARGET_OS_TV 0
-#endif
